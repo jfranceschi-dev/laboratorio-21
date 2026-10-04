@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: servicio-a }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: servicio-a } }
+  template:
+    metadata: { labels: { app: servicio-a } }
+    spec:
+      containers:
+      - name: servicio-a
+        image: "servicio-a:local"
+        imagePullPolicy: IfNotPresent
+        ports: [{ containerPort: 8080 }]
+        env:
+          - [ name: "SERVICIO_B_URL", value: "http://servicio-b:8080/dato" ]
+---
+apiVersion: v1
+kind: Service
+metadata: { name: servicio-a }
+spec:
+  type: NodePort
+  ports: [{ port: 8080, targetPort: 8080 }]
+  selector: { app: servicio-a }

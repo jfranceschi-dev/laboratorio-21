@@ -1,7 +1,0 @@
-services:
-  servicio-tareas:
-    build: .
-    image: servicio-tareas:local
-    ports:
-      - "8080:8080"
-    restart: unless-stopped
