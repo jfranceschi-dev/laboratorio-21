@@ -7,13 +7,24 @@ spec:
   template:
     metadata: { labels: { app: servicio-a } }
     spec:
+      initContainers:
+      - name: esperar-servicio-b
+        image: busybox:1.36
+        command:
+        - sh
+        - -c
+        - until wget -q -O /dev/null http://servicio-b:8080/dato; do echo esperando servicio-b; sleep 2; done
       containers:
       - name: servicio-a
         image: "servicio-a:local"
         imagePullPolicy: IfNotPresent
         ports: [{ containerPort: 8080 }]
+        readinessProbe:
+          httpGet: { path: /consulta, port: 8080 }
+          periodSeconds: 2
+          timeoutSeconds: 3
         env:
-          - [ name: "SERVICIO_B_URL", value: "http://servicio-b:8080/dato" ]
+          - { name: SERVICIO_B_URL, value: "http://servicio-b:8080/dato" }
 ---
 apiVersion: v1
 kind: Service
