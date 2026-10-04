@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>pa.gob.dntic</groupId>
-    <artifactId>tareas</artifactId>
+    <artifactId>servicio-b</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>servicio-tareas</name>
-    <description>servicio-tareas</description>
+    <name>servicio-b</name>
+    <description>servicio-b</description>
     <url/>
     <licenses>
         <license/>
