@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: servicio-b }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: servicio-b } }
+  template:
+    metadata: { labels: { app: servicio-b } }
+    spec:
+      containers:
+      - name: servicio-b
+        image: "servicio-b:local"
+        imagePullPolicy: IfNotPresent
+        ports: [{ containerPort: 8080 }]
+        readinessProbe:
+          httpGet: { path: /dato, port: 8080 }
+          periodSeconds: 2
+          timeoutSeconds: 3
+---
+apiVersion: v1
+kind: Service
+metadata: { name: servicio-b }
+spec:
+  selector: { app: servicio-b }
+  ports: [{ port: 8080, targetPort: 8080 }]
