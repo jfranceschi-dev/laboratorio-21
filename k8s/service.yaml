@@ -4,7 +4,6 @@ metadata:
   name: servicio-tareas
 spec:
   selector:
-
     app: servicio-tareas #enruta a los pods con esta etiqueta
   ports:
     - port: 8080
